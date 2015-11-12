@@ -1,0 +1,16 @@
+@import 'compass/css3';
+
+#map{
+	height: 99vh;
+	width: 75%;
+	float: left;
+}
+button{
+	a{
+		color: white;
+	}
+	a:hover{
+		text-decoration: none;
+		color: #888;
+	}
+}

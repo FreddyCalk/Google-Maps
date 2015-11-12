@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Google Maps - Angular Style</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+
+	<script src="jquery.min.js"></script>
+	<script src="angular.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+	<script src = "object.js"></script>
+	<script src="controller.js"></script>
+
+</head>
+<body ng-controller="mapController">
+	
+	<div id="map"></div>
+	<div id="list-window">
+		<form ng-submit="updateMarkers(searchString)">
+			<input id="filter-input" type="text" ng-model="searchString">
+			<input id="submit" type="submit" value="Update Map">
+			<div class="city" ng-repeat="city in (filteredCities = (cities | filter: searchString))">
+				{{city.yearRank}}: {{city.city}}
+					<a href="" class="btn btn-primary sm" ng-click="triggerClick(city.yearRank)">
+						Show Info
+					</a>
+			</div>
+		</form>
+	</div>
+	<div id="map-panel"></div>
+
+</body>
+</html>
