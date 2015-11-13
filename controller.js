@@ -39,6 +39,12 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 			title: city.city,
 			icon: icon
 		})
+		var weatherAPI = 'f41d10de3c0215d8df8b41a0b82a5f87'
+		var weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city.city+",us,ga&units=imperial&APPID="+weatherAPI;
+		
+		$.getJSON(weatherUrl, function(weatherData){
+            console.log(weatherData);
+        
 		// defining the HTML content of the infor boxes that appear when you click on a marker.
 		var markerContentHTML = '<div class="infoWindowContent">';
 		    markerContentHTML += '<div class="total-pop">Total Population: ' + city.yearEstimate + '</div>';
@@ -47,6 +53,9 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    markerContentHTML += '<div class="pop-dens">Population Density: ' + city.lastPopDensityMiles + '</div>';
 		    markerContentHTML += '<div class="state">State: ' + city.state + '</div>';
 		    markerContentHTML += '<div class="land-area">Land Area: ' + city.landAreaSqMiles + '</div>';
+		    markerContentHTML += '<div>'+weatherData.main.temp+'&#176F</div>';
+		    http://openweathermap.org/img/w/"+icon+".png
+		    markerContentHTML += '<img src="http://openweathermap.org/img/w/'+weatherData.weather[0].icon+'.png"><br>'
 		    markerContentHTML += '<a href="#" onclick="getDirections('+lat+','+lon+')">Get directions</a><br>';
 		    markerContentHTML += '<a href="#" onclick="lodgingSearch('+lat+','+lon+')">Get Lodging</a><br>';
 		    markerContentHTML += '<a href="#" onclick="grocerySearch('+lat+','+lon+')">Find Food</a>';
@@ -56,6 +65,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 	    	infoWindow.setContent('<h2>'+ marker.title + '</h2>' + marker.content);
 	    	infoWindow.open($scope.map, marker);
 	    });
+    	});
     	// adding the marker that just got made to the total marker Array.
     	$scope.markers.push(marker)
 	}
@@ -239,9 +249,7 @@ grocerySearch = function(lat1, lon1){
 		      	var html = "<div id='info-window'>"+place.name+"<br>"+place.formatted_address+"<br>"
 		      		html += place.formatted_phone_number+"</div>"
 	      		console.log(html)
-		        infowindow.setContent(html);
-
-		      
+		        infowindow.setContent(html);		      
 			}
 		})
 		  });
