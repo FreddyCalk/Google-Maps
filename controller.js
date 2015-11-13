@@ -144,22 +144,16 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    position: place.geometry.location,
 		    icon: "media/lodging.png"
 		  });
-		  var html="<div id='info-window'>"+place.name+"<br>"+place.vicinity+"</div>"
+		  // var html="<div id='info-window'>"+place.name+"<br>"+place.vicinity+"</div>"
 		  google.maps.event.addListener(marker, 'click', function() {
-		    // infowindow.setContent(html);
 		    infowindow.open(map, this);
-		    // var placeUrl = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+placeId+'&key='+apiKey
-		    // $.getJSON(placeUrl,function(data){
-		    // 	console.log(data)
-		    // })
-		  var request = {
-		    placeId: place.place_id
-		  };
+			
+			var request = {
+		    	placeId: place.place_id
+			};
 
 		  var service = new google.maps.places.PlacesService(map);
 		  service.getDetails(request, function (place, status) {
-		  	console.log(place)
-		  	console.log(status)
 		    if (status == google.maps.places.PlacesServiceStatus.OK) {
 		      // If the request succeeds, draw the place location on the map
 		      // as a marker, and register an event to handle a click on the marker.
@@ -168,29 +162,23 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		        position: place.geometry.location,
 		        icon: "media/lodging.png"
 		      });
-
-		      google.maps.event.addListener(marker, 'click', function() {
-		      	if(place.open_now){
+		      console.log(place)
 		      	var html = "<div id='info-window'>"+place.name+"<br>"+place.formatted_address+"<br>"
-		      		html += "Open</div>"
-	      		}else{
-	      			html = "<div id='info-window'>"+place.name+"<br>"+place.formatted_address+"<br>"
-		      		html += "Closed</div>"
-	      		}
+		      		html += place.formatted_phone_number+"</div>"
+	      		console.log(html)
 		        infowindow.setContent(html);
-		        infowindow.open(map, this);
-		      });
+		      
 			}
 		})
 	})
-}
+	}
 }
 
 
 
 // Function to return local grocery stores. Passing lat and lon
 grocerySearch = function(lat1, lon1){
-		var map;e
+		var map;
 		var infowindow;
 		var pyrmont = {lat: lat1, lng: lon1};
 		var input = $('#golf-search').text();
@@ -231,12 +219,31 @@ grocerySearch = function(lat1, lon1){
 		  var html="<div id='info-window'>"+place.name+"<br>"+place.vicinity+"</div>"
 		  google.maps.event.addListener(marker, 'click', function() {
 		    var placeId = place.id;
-		    infowindow.setContent(html);
 		    infowindow.open(map, this);
-		    var placeUrl = 'http://ec2-52-89-209-37.us-west-2.compute.amazonaws.com/places-proxy/?placeid='+placeId;
-		  	$.getJSON(placeUrl,function(data){
-		  		console.log(data);
-		  	})
+
+		    var request = {
+		    	placeId: place.place_id
+			};
+
+			var service = new google.maps.places.PlacesService(map);
+			service.getDetails(request, function (place, status) {
+		    if (status == google.maps.places.PlacesServiceStatus.OK) {
+		      // If the request succeeds, draw the place location on the map
+		      // as a marker, and register an event to handle a click on the marker.
+		      var marker = new google.maps.Marker({
+		        map: map,
+		        position: place.geometry.location,
+		        icon: "media/grocerystore.png"
+		      });
+		      console.log(place)
+		      	var html = "<div id='info-window'>"+place.name+"<br>"+place.formatted_address+"<br>"
+		      		html += place.formatted_phone_number+"</div>"
+	      		console.log(html)
+		        infowindow.setContent(html);
+
+		      
+			}
+		})
 		  });
 		}
 	}
