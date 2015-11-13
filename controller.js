@@ -138,8 +138,8 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		  var placeLoc = place.geometry.location;
 		  var marker = new google.maps.Marker({
 		    map: map,
-		    position: place.geometry.location
-		    // icon:
+		    position: place.geometry.location,
+		    icon: "media/lodging.png"
 		  });
 
 		  google.maps.event.addListener(marker, 'click', function() {
@@ -190,8 +190,8 @@ grocerySearch = function(lat1, lon1){
 		  var placeLoc = place.geometry.location;
 		  var marker = new google.maps.Marker({
 		    map: map,
-		    position: place.geometry.location
-		    // icon:
+		    position: place.geometry.location,
+		    icon:"media/grocerystore.png"
 		  });
 
 		  google.maps.event.addListener(marker, 'click', function() {
