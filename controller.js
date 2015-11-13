@@ -124,7 +124,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    radius: 10000,
 		    types: ['lodging']
 		  }, callback);
-		// }
+			console.log(service.nearbySearch.types);
 
 		function callback(results, status) {
 		  if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -149,12 +149,19 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		}
 	}
 
+<<<<<<< Updated upstream
 grocerySearch = function(lat1, lon1){
 		var map;
 		var infowindow;
 
 		// function initMap() {
 		  var pyrmont = {lat: lat1, lng: lon1};
+=======
+	var input = $('#golf-search').text();
+	var map;
+	var service;
+	var infowindow;
+>>>>>>> Stashed changes
 
 		  map = new google.maps.Map(document.getElementById('map'), {
 		    center: pyrmont,
