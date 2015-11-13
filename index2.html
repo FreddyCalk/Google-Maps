@@ -17,15 +17,16 @@
 </head>
 <body ng-controller="mapController">
 	
-	<div id="map"></div>
+	<div id="map" class='col-xs-8'></div>
 	<div id="list-window">
 		<form ng-submit="updateMarkers(searchString)">
 
 			<!-- <button id="lodging-search" ng-click="lodgingSearch()"class="btn btn-primary sm">Lodging Search</button> -->
-
-			<input id="filter-input" type="text" ng-model="searchString">
-			<input id="submit" type="submit" value="Update Map">
-			<div class="city" ng-repeat="city in (filteredCities = (cities | filter: searchString))">
+			<div id="search-wrapper" class='col-xs-4'>
+				<input id="filter-input" type="text" ng-model="searchString">
+				<input id="submit" type="submit" value="Update Map">
+			</div>
+			<div class="city col-xs-2" ng-repeat="city in (filteredCities = (cities | filter: searchString))">
 				{{city.yearRank}}: {{city.city}}
 					<a href="" class="btn btn-primary sm" ng-click="triggerClick(city.yearRank)">
 						Show Info
