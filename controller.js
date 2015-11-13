@@ -124,7 +124,6 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    radius: 10000,
 		    types: ['lodging']
 		  }, callback);
-			console.log(service.nearbySearch.types);
 
 		function callback(results, status) {
 		  if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -135,15 +134,16 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		}
 
 		function createMarker(place) {
+			console.log(place);
 		  var placeLoc = place.geometry.location;
 		  var marker = new google.maps.Marker({
 		    map: map,
 		    position: place.geometry.location,
 		    icon: "media/lodging.png"
 		  });
-
+		  var html="<div id='info-window'>"+place.name+"<br>"+place.vicinity+"</div>"
 		  google.maps.event.addListener(marker, 'click', function() {
-		    infowindow.setContent(place.name);
+		    infowindow.setContent(html);
 		    infowindow.open(map, this);
 		  });
 		}
@@ -192,9 +192,9 @@ grocerySearch = function(lat1, lon1){
 		    position: place.geometry.location,
 		    icon:"media/grocerystore.png"
 		  });
-
+		  var html="<div id='info-window'>"+place.name+"<br>"+place.vicinity+"</div>"
 		  google.maps.event.addListener(marker, 'click', function() {
-		    infowindow.setContent(place.name);
+		    infowindow.setContent(html);
 		    infowindow.open(map, this);
 		  });
 		}
