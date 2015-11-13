@@ -13,11 +13,19 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 
 	var infoWindow = new google.maps.InfoWindow();
 
-	
+
 
 	function createMarker(city,index){
-		var latLon = city.latLon.split(' ');
 
+		if(index==0){
+        	icon = 'assets/images/1.png';
+        }else if(index==38){
+        	icon ='assets/images/atl.png';
+        }else{
+        	icon = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569';
+        }
+
+		var latLon = city.latLon.split(' ');
 		var lat = latLon[0].slice(0,latLon[0].indexOf('&#176')-1);
 		var lon = -latLon[1].slice(0,latLon[1].indexOf('&#176')-1);
 
@@ -27,6 +35,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 			title: city.city,
 			icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=•%7CFE7569'
 		})
+
 		var markerContentHTML = '<div class="infoWindowContent">';
 		    markerContentHTML += '<div class="total-pop">Total Population: ' + city.yearEstimate + '</div>';
 		    markerContentHTML += '<div class="pop-dens-last-year">2010 Census: ' + city.lastCensus + '</div>';
@@ -34,11 +43,8 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    markerContentHTML += '<div class="pop-dens">Population Density: ' + city.lastPopDensityMiles + '</div>';
 		    markerContentHTML += '<div class="state">State: ' + city.state + '</div>';
 		    markerContentHTML += '<div class="land-area">Land Area: ' + city.landAreaSqMiles + '</div>';
-
 		    markerContentHTML += '<a href="#" onclick="getDirections('+lat+','+lon+')">Get directions</a><br>';
 		    markerContentHTML += '<a href="#" onclick="lodgingSearch('+lat+','+lon+')">Get Lodging</a>';
-
-		    // markerContentHTML += '<a href="#" onclick="getDirections('+lat+','+lon+')">Get directions</a>';
 
 	    markerContentHTML += '</div>';
 	    marker.content = markerContentHTML;
