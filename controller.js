@@ -1,7 +1,8 @@
 // Angular App Module and controller
 angular.module('myApp',[]).controller('mapController',function($scope){
-
 	// Initializing the map options on load
+	var apiKey = 'AIzaSyALbD8scArYbj-bAZUvZOk7ld5KUTxAE5A';
+
 	var mapOption = {
 		zoom: 4,
 		center: new google.maps.LatLng(40.000,-98.000),
@@ -83,7 +84,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
    			mapTypeId: google.maps.MapTypeId.ROADMAP
    		})
    		directionsDisplay.setMap(map);
-   		directionsDisplay.setPanel($('#map-panel')[0]);\
+   		directionsDisplay.setPanel($('#map-panel')[0]);
    		// Prompt the user to input their current location.
    		var origin = prompt('Enter your current location!');
    		var request = {
@@ -112,7 +113,6 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		var map;
 		var infowindow;
 
-		// function initMap() {
 		  var pyrmont = {lat: lat1, lng: lon1};
 
 		  map = new google.maps.Map(document.getElementById('map'), {
@@ -128,7 +128,6 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    radius: 10000,
 		    types: ['lodging']
 		  }, callback);
-
 		function callback(results, status) {
 		  if (status === google.maps.places.PlacesServiceStatus.OK) {
 		    for (var i = 0; i < results.length; i++) {
@@ -138,7 +137,6 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		}
 
 		function createMarker(place) {
-			console.log(place);
 		  var placeLoc = place.geometry.location;
 		  var marker = new google.maps.Marker({
 		    map: map,
@@ -147,15 +145,51 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		  });
 		  var html="<div id='info-window'>"+place.name+"<br>"+place.vicinity+"</div>"
 		  google.maps.event.addListener(marker, 'click', function() {
-		    infowindow.setContent(html);
+		    // infowindow.setContent(html);
 		    infowindow.open(map, this);
-		  });
-		}
-	}
+		    // var placeUrl = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+placeId+'&key='+apiKey
+		    // $.getJSON(placeUrl,function(data){
+		    // 	console.log(data)
+		    // })
+		  var request = {
+		    placeId: place.place_id
+		  };
+
+		  var service = new google.maps.places.PlacesService(map);
+		  service.getDetails(request, function (place, status) {
+		  	console.log(place)
+		  	console.log(status)
+		    if (status == google.maps.places.PlacesServiceStatus.OK) {
+		      // If the request succeeds, draw the place location on the map
+		      // as a marker, and register an event to handle a click on the marker.
+		      var marker = new google.maps.Marker({
+		        map: map,
+		        position: place.geometry.location,
+		        icon: "media/lodging.png"
+		      });
+
+		      google.maps.event.addListener(marker, 'click', function() {
+		      	if(place.open_now){
+		      	var html = "<div id='info-window'>"+place.name+"<br>"+place.formatted_address+"<br>"
+		      		html += "Open</div>"
+	      		}else{
+	      			html = "<div id='info-window'>"+place.name+"<br>"+place.formatted_address+"<br>"
+		      		html += "Closed</div>"
+	      		}
+		        infowindow.setContent(html);
+		        infowindow.open(map, this);
+		      });
+			}
+		})
+	})
+}
+}
+
+
 
 
 grocerySearch = function(lat1, lon1){
-		var map;
+		var map;e
 		var infowindow;
 
 		var pyrmont = {lat: lat1, lng: lon1};
@@ -179,7 +213,6 @@ grocerySearch = function(lat1, lon1){
 		    radius: 10000,
 		    types: ['grocery_or_supermarket']
 		  }, callback);
-		// }
 
 		function callback(results, status) {
 		  if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -198,8 +231,13 @@ grocerySearch = function(lat1, lon1){
 		  });
 		  var html="<div id='info-window'>"+place.name+"<br>"+place.vicinity+"</div>"
 		  google.maps.event.addListener(marker, 'click', function() {
+		    var placeId = place.id;
 		    infowindow.setContent(html);
 		    infowindow.open(map, this);
+		    var placeUrl = 'http://ec2-52-89-209-37.us-west-2.compute.amazonaws.com/places-proxy/?placeid='+placeId;
+		  	$.getJSON(placeUrl,function(data){
+		  		console.log(data);
+		  	})
 		  });
 		}
 	}
