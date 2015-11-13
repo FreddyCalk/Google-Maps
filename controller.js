@@ -18,9 +18,9 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 	function createMarker(city,index){
 
 		if(index==0){
-        	icon = 'assets/images/1.png';
+        	icon = 'media/1.png';
         }else if(index==38){
-        	icon ='assets/images/atl.png';
+        	icon ='media/atl.png';
         }else{
         	icon = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569';
         }
@@ -44,11 +44,12 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    markerContentHTML += '<div class="state">State: ' + city.state + '</div>';
 		    markerContentHTML += '<div class="land-area">Land Area: ' + city.landAreaSqMiles + '</div>';
 		    markerContentHTML += '<a href="#" onclick="getDirections('+lat+','+lon+')">Get directions</a><br>';
-		    markerContentHTML += '<a href="#" onclick="lodgingSearch('+lat+','+lon+')">Get Lodging</a>';
+		    markerContentHTML += '<a href="#" onclick="lodgingSearch('+lat+','+lon+')">Get Lodging</a><br>';
+		    markerContentHTML += '<a href="#" onclick="grocerySearch('+lat+','+lon+')">Find Food</a>';
 
-	    markerContentHTML += '</div>';
-	    marker.content = markerContentHTML;
-	    google.maps.event.addListener(marker, 'click', function(){
+	    	markerContentHTML += '</div>';
+    		marker.content = markerContentHTML;
+	    	google.maps.event.addListener(marker, 'click', function(){
 	    	infoWindow.setContent('<h2>'+ marker.title + '</h2>' + marker.content);
 	    	infoWindow.open($scope.map, marker);
 	    });
@@ -138,6 +139,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		  var marker = new google.maps.Marker({
 		    map: map,
 		    position: place.geometry.location
+		    // icon:
 		  });
 
 		  google.maps.event.addListener(marker, 'click', function() {
@@ -147,47 +149,52 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		}
 	}
 
+grocerySearch = function(lat1, lon1){
+		var map;
+		var infowindow;
 
-	var input = $('#golf-search').text();
-	var map;
-	var service;
-	var infowindow;
+		// function initMap() {
+		  var pyrmont = {lat: lat1, lng: lon1};
 
-	function initialize() {
-	  var pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
+		  map = new google.maps.Map(document.getElementById('map'), {
+		    center: pyrmont,
+		    zoom: 11
+		  });
 
-	  map = new google.maps.Map(document.getElementById('map'), {
-	      center: pyrmont,
-	      zoom: 15
-	    });
+		  infowindow = new google.maps.InfoWindow();
 
-	  var request = {
-	    location: pyrmont,
-	    radius: '500',
-	    types: [input]
-	  };
+		  var service = new google.maps.places.PlacesService(map);
+		  service.nearbySearch({
+		    location: pyrmont,
+		    radius: 10000,
+		    types: ['grocery_or_supermarket']
+		  }, callback);
+		// }
 
-	  service = new google.maps.places.PlacesService(map);
-	  service.nearbySearch(request, callback);
+		function callback(results, status) {
+		  if (status === google.maps.places.PlacesServiceStatus.OK) {
+		    for (var i = 0; i < results.length; i++) {
+		      createMarker(results[i]);
+		    }
+		  }
+		}
+
+		function createMarker(place) {
+		  var placeLoc = place.geometry.location;
+		  var marker = new google.maps.Marker({
+		    map: map,
+		    position: place.geometry.location
+		    // icon:
+		  });
+
+		  google.maps.event.addListener(marker, 'click', function() {
+		    infowindow.setContent(place.name);
+		    infowindow.open(map, this);
+		  });
+		}
 	}
-
-	function callback(results, status) {
-	  if (status == google.maps.places.PlacesServiceStatus.OK) {
-	    for (var i = 0; i < results.length; i++) {
-	      var place = results[i];
-	      createMarker(results[i]);
-	    }
-	  }
-	}
-	$('#golf-search').click(function(){
-		var map = new google.maps.Map($('#map')[0],{
-   			zoom:7,
-   			mapTypeId: google.maps.MapTypeId.ROADMAP
-   		})
-		
-	})
-
 })
+	
 
 
 
