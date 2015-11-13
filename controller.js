@@ -43,15 +43,14 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		var weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city.city+",us,ga&units=imperial&APPID="+weatherAPI;
 		
 		$.getJSON(weatherUrl, function(weatherData){
-            console.log(weatherData);
         
 		// defining the HTML content of the infor boxes that appear when you click on a marker.
 		var markerContentHTML = '<div class="infoWindowContent">';
+			markerContentHTML += '<div class="state">State: ' + city.state + '</div>';
 		    markerContentHTML += '<div class="total-pop">Total Population: ' + city.yearEstimate + '</div>';
 		    markerContentHTML += '<div class="pop-dens-last-year">2010 Census: ' + city.lastCensus + '</div>';
 		    markerContentHTML += '<div class="pop-change">Population Change %: ' + city.change + '</div>';
 		    markerContentHTML += '<div class="pop-dens">Population Density: ' + city.lastPopDensityMiles + '</div>';
-		    markerContentHTML += '<div class="state">State: ' + city.state + '</div>';
 		    markerContentHTML += '<div class="land-area">Land Area: ' + city.landAreaSqMiles + '</div>';
 		    markerContentHTML += '<div>'+weatherData.main.temp+'&#176F</div>';
 		    http://openweathermap.org/img/w/"+icon+".png
@@ -226,7 +225,6 @@ grocerySearch = function(lat1, lon1){
 		    position: place.geometry.location,
 		    icon:"media/grocerystore.png"
 		  });
-		  var html="<div id='info-window'>"+place.name+"<br>"+place.vicinity+"</div>"
 		  google.maps.event.addListener(marker, 'click', function() {
 		    var placeId = place.id;
 		    infowindow.open(map, this);
@@ -256,9 +254,3 @@ grocerySearch = function(lat1, lon1){
 		}
 	}
 })
-	
-
-
-
-
-
