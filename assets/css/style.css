@@ -8,12 +8,9 @@
 	margin-top: 5px;
 }
 /* line 9, ../compass/sass/style.scss */
-a {
-  color: white;
+a.btn {
+
   float:right;
 }
 /* line 12, ../compass/sass/style.scss */
-a:hover {
-  text-decoration: none;
-  color: #888;
-}
+
