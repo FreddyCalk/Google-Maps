@@ -83,7 +83,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
    			mapTypeId: google.maps.MapTypeId.ROADMAP
    		})
    		directionsDisplay.setMap(map);
-   		directionsDisplay.setPanel($('#map-panel')[0]);\
+   		directionsDisplay.setPanel($('#map-panel')[0]);
    		// Prompt the user to input their current location.
    		var origin = prompt('Enter your current location!');
    		var request = {
