@@ -33,7 +33,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 			map: $scope.map,
 			position: new google.maps.LatLng(lat, lon),
 			title: city.city,
-			icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=•%7CFE7569'
+			icon: icon
 		})
 
 		var markerContentHTML = '<div class="infoWindowContent">';
