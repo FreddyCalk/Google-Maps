@@ -99,7 +99,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
           }
         });
 	}
-
+	// Letting the object be visible to the DOM and creating markers
 	$scope.cities = cities;
 	for(i=0; i<cities.length; i++){
 		createMarker(cities[i],i);
@@ -107,19 +107,19 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 
 	
 
-
+	// Function to display local lodging options.  Passing lat and lon for starting location
 	lodgingSearch = function(lat1, lon1){
 		var map;
 		var infowindow;
 
 		// function initMap() {
 		  var pyrmont = {lat: lat1, lng: lon1};
-
+		  // Setting center of area to look for lodging
 		  map = new google.maps.Map(document.getElementById('map'), {
 		    center: pyrmont,
 		    zoom: 12
 		  });
-
+		  // Generate a new info window
 		  infowindow = new google.maps.InfoWindow();
 
 		  var service = new google.maps.places.PlacesService(map);
@@ -128,7 +128,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    radius: 10000,
 		    types: ['lodging']
 		  }, callback);
-
+		  // Google function that calls back the lodging results
 		function callback(results, status) {
 		  if (status === google.maps.places.PlacesServiceStatus.OK) {
 		    for (var i = 0; i < results.length; i++) {
@@ -136,7 +136,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    }
 		  }
 		}
-
+		// Creates and drops the lodging icons
 		function createMarker(place) {
 			console.log(place);
 		  var placeLoc = place.geometry.location;
@@ -153,24 +153,21 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		}
 	}
 
-
+// Function to return local grocery stores. Passing lat and lon
 grocerySearch = function(lat1, lon1){
 		var map;
 		var infowindow;
-
 		var pyrmont = {lat: lat1, lng: lon1};
-
 		var input = $('#golf-search').text();
 		var map;
 		var service;
 		var infowindow;
-
-
+		// Set the center location to display nearby stores
 		  map = new google.maps.Map(document.getElementById('map'), {
 		    center: pyrmont,
 		    zoom: 11
 		  });
-
+		  // Generate a new info window for each store returned
 		  infowindow = new google.maps.InfoWindow();
 
 		  var service = new google.maps.places.PlacesService(map);
@@ -179,8 +176,7 @@ grocerySearch = function(lat1, lon1){
 		    radius: 10000,
 		    types: ['grocery_or_supermarket']
 		  }, callback);
-		// }
-
+		  // Returned results
 		function callback(results, status) {
 		  if (status === google.maps.places.PlacesServiceStatus.OK) {
 		    for (var i = 0; i < results.length; i++) {
@@ -188,7 +184,7 @@ grocerySearch = function(lat1, lon1){
 		    }
 		  }
 		}
-
+		// Create custom grocery store icons and place them
 		function createMarker(place) {
 		  var placeLoc = place.geometry.location;
 		  var marker = new google.maps.Marker({
