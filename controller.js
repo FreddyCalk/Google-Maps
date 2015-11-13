@@ -80,11 +80,11 @@ angular.module('myApp',[]).controller('mapController',function($scope){
    		})
    		directionsDisplay.setMap(map);
    		directionsDisplay.setPanel($('#map-panel')[0]);
-
+   		var origin = prompt('Enter your current location!');
    		var request = {
            //Origin hardcoded to Atlanta. Require geocode current loc,
            //or give user input
-          origin: '1807 Meadowdale Ave NE Atlanta, GA 30306', 
+          origin: origin, 
           destination: new google.maps.LatLng(lat,lon), 
           travelMode: google.maps.DirectionsTravelMode.DRIVING
         };
@@ -154,13 +154,12 @@ grocerySearch = function(lat1, lon1){
 		var map;
 		var infowindow;
 
-		// function initMap() {
-		  var pyrmont = {lat: lat1, lng: lon1};
+		var pyrmont = {lat: lat1, lng: lon1};
 
-	var input = $('#golf-search').text();
-	var map;
-	var service;
-	var infowindow;
+		var input = $('#golf-search').text();
+		var map;
+		var service;
+		var infowindow;
 
 
 		  map = new google.maps.Map(document.getElementById('map'), {
