@@ -106,7 +106,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 
 		  map = new google.maps.Map(document.getElementById('map'), {
 		    center: pyrmont,
-		    zoom: 14
+		    zoom: 12
 		  });
 
 		  infowindow = new google.maps.InfoWindow();
