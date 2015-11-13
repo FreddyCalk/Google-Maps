@@ -1,6 +1,7 @@
 // Angular App Module and controller
 angular.module('myApp',[]).controller('mapController',function($scope){
-
+	// var lat;
+	// var lon;
 	var mapOption = {
 		zoom: 4,
 		center: new google.maps.LatLng(40.000,-98.000),
@@ -16,8 +17,8 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 
 	function createMarker(city,index){
 		var latLon = city.latLon.split(' ');
-		var lat = latLon[0].slice(0,latLon[0].indexOf('&#176')-1);
-		var lon = -latLon[1].slice(0,latLon[1].indexOf('&#176')-1);
+		 lat = latLon[0].slice(0,latLon[0].indexOf('&#176')-1);
+		 lon = -latLon[1].slice(0,latLon[1].indexOf('&#176')-1);
 		var marker = new google.maps.Marker({
 			map: $scope.map,
 			position: new google.maps.LatLng(lat, lon),
@@ -31,7 +32,8 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    markerContentHTML += '<div class="pop-dens">Population Density: ' + city.lastPopDensityMiles + '</div>';
 		    markerContentHTML += '<div class="state">State: ' + city.state + '</div>';
 		    markerContentHTML += '<div class="land-area">Land Area: ' + city.landAreaSqMiles + '</div>';
-		    markerContentHTML += '<a href="#" onclick="getDirections('+lat+','+lon+')">Get directions</a>';
+		    markerContentHTML += '<a href="#" onclick="getDirections('+lat+','+lon+')">Get directions</a><br>';
+		    markerContentHTML += '<a href="#" onclick="lodgingSearch('+lat+','+lon+')">Get Lodging</a>';
 	    markerContentHTML += '</div>';
 	    marker.content = markerContentHTML;
 	    google.maps.event.addListener(marker, 'click', function(){
@@ -54,6 +56,8 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		}
 		$('#filter-input').val('')	
 	}
+
+	
 	getDirections = function(lat,lon){
 		var directionsService = new google.maps.DirectionsService();
    		var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -82,6 +86,52 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 	$scope.cities = cities;
 	for(i=0; i<cities.length; i++){
 		createMarker(cities[i],i);
+	}
+	
+
+
+	lodgingSearch = function(lat1, lon1){
+		var map;
+		var infowindow;
+
+		// function initMap() {
+		  var pyrmont = {lat: lat1, lng: lon1};
+
+		  map = new google.maps.Map(document.getElementById('map'), {
+		    center: pyrmont,
+		    zoom: 14
+		  });
+
+		  infowindow = new google.maps.InfoWindow();
+
+		  var service = new google.maps.places.PlacesService(map);
+		  service.nearbySearch({
+		    location: pyrmont,
+		    radius: 10000,
+		    types: ['lodging']
+		  }, callback);
+		// }
+
+		function callback(results, status) {
+		  if (status === google.maps.places.PlacesServiceStatus.OK) {
+		    for (var i = 0; i < results.length; i++) {
+		      createMarker(results[i]);
+		    }
+		  }
+		}
+
+		function createMarker(place) {
+		  var placeLoc = place.geometry.location;
+		  var marker = new google.maps.Marker({
+		    map: map,
+		    position: place.geometry.location
+		  });
+
+		  google.maps.event.addListener(marker, 'click', function() {
+		    infowindow.setContent(place.name);
+		    infowindow.open(map, this);
+		  });
+		}
 	}
 
 })

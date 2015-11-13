@@ -10,7 +10,7 @@
 	<script src="jquery.min.js"></script>
 	<script src="angular.min.js"></script>
 	<script src="bootstrap.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 	<script src = "object.js"></script>
 	<script src="controller.js"></script>
 
@@ -20,6 +20,7 @@
 	<div id="map"></div>
 	<div id="list-window">
 		<form ng-submit="updateMarkers(searchString)">
+			<!-- <button id="lodging-search" ng-click="lodgingSearch()"class="btn btn-primary sm">Lodging Search</button> -->
 			<input id="filter-input" type="text" ng-model="searchString">
 			<input id="submit" type="submit" value="Update Map">
 			<div class="city" ng-repeat="city in (filteredCities = (cities | filter: searchString))">
@@ -28,6 +29,7 @@
 						Show Info
 					</a>
 			</div>
+			
 		</form>
 	</div>
 	<div id="map-panel"></div>
