@@ -20,7 +20,10 @@
 	<div id="map"></div>
 	<div id="list-window">
 		<form ng-submit="updateMarkers(searchString)">
+<<<<<<< HEAD
 			<!-- <button id="lodging-search" ng-click="lodgingSearch()"class="btn btn-primary sm">Lodging Search</button> -->
+=======
+>>>>>>> origin/master
 			<input id="filter-input" type="text" ng-model="searchString">
 			<input id="submit" type="submit" value="Update Map">
 			<div class="city" ng-repeat="city in (filteredCities = (cities | filter: searchString))">
@@ -29,7 +32,11 @@
 						Show Info
 					</a>
 			</div>
+<<<<<<< HEAD
 			
+=======
+			<button id="golf-search" class="btn btn-primary sm">Golf Search</button>
+>>>>>>> origin/master
 		</form>
 	</div>
 	<div id="map-panel"></div>

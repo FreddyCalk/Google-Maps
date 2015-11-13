@@ -1,7 +1,11 @@
 // Angular App Module and controller
 angular.module('myApp',[]).controller('mapController',function($scope){
+<<<<<<< HEAD
 	// var lat;
 	// var lon;
+=======
+
+>>>>>>> origin/master
 	var mapOption = {
 		zoom: 4,
 		center: new google.maps.LatLng(40.000,-98.000),
@@ -17,8 +21,13 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 
 	function createMarker(city,index){
 		var latLon = city.latLon.split(' ');
+<<<<<<< HEAD
 		 lat = latLon[0].slice(0,latLon[0].indexOf('&#176')-1);
 		 lon = -latLon[1].slice(0,latLon[1].indexOf('&#176')-1);
+=======
+		var lat = latLon[0].slice(0,latLon[0].indexOf('&#176')-1);
+		var lon = -latLon[1].slice(0,latLon[1].indexOf('&#176')-1);
+>>>>>>> origin/master
 		var marker = new google.maps.Marker({
 			map: $scope.map,
 			position: new google.maps.LatLng(lat, lon),
@@ -32,8 +41,12 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    markerContentHTML += '<div class="pop-dens">Population Density: ' + city.lastPopDensityMiles + '</div>';
 		    markerContentHTML += '<div class="state">State: ' + city.state + '</div>';
 		    markerContentHTML += '<div class="land-area">Land Area: ' + city.landAreaSqMiles + '</div>';
+<<<<<<< HEAD
 		    markerContentHTML += '<a href="#" onclick="getDirections('+lat+','+lon+')">Get directions</a><br>';
 		    markerContentHTML += '<a href="#" onclick="lodgingSearch('+lat+','+lon+')">Get Lodging</a>';
+=======
+		    markerContentHTML += '<a href="#" onclick="getDirections('+lat+','+lon+')">Get directions</a>';
+>>>>>>> origin/master
 	    markerContentHTML += '</div>';
 	    marker.content = markerContentHTML;
 	    google.maps.event.addListener(marker, 'click', function(){
@@ -56,8 +69,11 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		}
 		$('#filter-input').val('')	
 	}
+<<<<<<< HEAD
 
 	
+=======
+>>>>>>> origin/master
 	getDirections = function(lat,lon){
 		var directionsService = new google.maps.DirectionsService();
    		var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -87,6 +103,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 	for(i=0; i<cities.length; i++){
 		createMarker(cities[i],i);
 	}
+<<<<<<< HEAD
 	
 
 
@@ -134,6 +151,46 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		}
 	}
 
+=======
+	var input = $('#golf-search').text();
+	var map;
+	var service;
+	var infowindow;
+
+	function initialize() {
+	  var pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
+
+	  map = new google.maps.Map(document.getElementById('map'), {
+	      center: pyrmont,
+	      zoom: 15
+	    });
+
+	  var request = {
+	    location: pyrmont,
+	    radius: '500',
+	    types: [input]
+	  };
+
+	  service = new google.maps.places.PlacesService(map);
+	  service.nearbySearch(request, callback);
+	}
+
+	function callback(results, status) {
+	  if (status == google.maps.places.PlacesServiceStatus.OK) {
+	    for (var i = 0; i < results.length; i++) {
+	      var place = results[i];
+	      createMarker(results[i]);
+	    }
+	  }
+	}
+	$('#golf-search').click(function(){
+		var map = new google.maps.Map($('#map')[0],{
+   			zoom:7,
+   			mapTypeId: google.maps.MapTypeId.ROADMAP
+   		})
+		
+	})
+>>>>>>> origin/master
 })
 
 
