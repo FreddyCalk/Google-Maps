@@ -4,7 +4,9 @@
   /*width: 75%;*/
   float: left;
 }
-
+.city{
+	margin-top: 5px;
+}
 /* line 9, ../compass/sass/style.scss */
 a {
   color: white;
