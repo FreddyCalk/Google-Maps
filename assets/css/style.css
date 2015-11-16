@@ -16,3 +16,20 @@
 a.btn {
   float: right;
 }
+
+/* line 17, ../compass/sass/style.scss */
+.floated {
+  position: absolute;
+  right: 10px;
+  top: 90px;
+}
+
+/* line 22, ../compass/sass/style.scss */
+.infoWindowContent {
+  position: relative;
+}
+
+/* line 25, ../compass/sass/style.scss */
+.bold {
+  font-weight: bold;
+}

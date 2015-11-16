@@ -43,18 +43,18 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		var weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city.city+",us,ga&units=imperial&APPID="+weatherAPI;
 		
 		$.getJSON(weatherUrl, function(weatherData){
-        
+        	console.log(weatherData)
 		// defining the HTML content of the infor boxes that appear when you click on a marker.
 		var markerContentHTML = '<div class="infoWindowContent">';
-			markerContentHTML += '<div class="state">State: ' + city.state + '</div>';
-		    markerContentHTML += '<div class="total-pop">Total Population: ' + city.yearEstimate + '</div>';
-		    markerContentHTML += '<div class="pop-dens-last-year">2010 Census: ' + city.lastCensus + '</div>';
-		    markerContentHTML += '<div class="pop-change">Population Change %: ' + city.change + '</div>';
-		    markerContentHTML += '<div class="pop-dens">Population Density: ' + city.lastPopDensityMiles + '</div>';
-		    markerContentHTML += '<div class="land-area">Land Area: ' + city.landAreaSqMiles + '</div>';
-		    markerContentHTML += '<div>'+weatherData.main.temp+'&#176F</div>';
-		    http://openweathermap.org/img/w/"+icon+".png
-		    markerContentHTML += '<img src="http://openweathermap.org/img/w/'+weatherData.weather[0].icon+'.png"><br>'
+			markerContentHTML += '<div class="state"><span class="bold">State:</span> ' + city.state + '</div>';
+		    markerContentHTML += '<div class="total-pop"><span class="bold">Total Population:</span> ' + city.yearEstimate + '</div>';
+		    markerContentHTML += '<div class="pop-dens-last-year"><span class="bold">2010 Census:</span> ' + city.lastCensus + '</div>';
+		    markerContentHTML += '<div class="pop-change"><span class="bold">Population Change %:</span> ' + city.change + '</div>';
+		    markerContentHTML += '<div class="pop-dens"><span class="bold">Population Density:</span> ' + city.lastPopDensityMiles + '</div>';
+		    markerContentHTML += '<div class="land-area"><span class="bold">Land Area:</span> ' + city.landAreaSqMiles + '</div>';
+		    markerContentHTML += '<div><span class="bold">Temperature:</span> '+weatherData.main.temp+'&#176F</div>';
+		    markerContentHTML += '<img class="floated" src="http://openweathermap.org/img/w/'+weatherData.weather[0].icon+'.png"><br>';
+		    markerContentHTML += '<div><span class="bold">Winds:</span> '+cardinalDirection(weatherData.wind.deg)+ ' at '+ weatherData.wind.speed+ ' mph</div><br>';
 		    markerContentHTML += '<a href="#" onclick="getDirections('+lat+','+lon+')">Get directions</a><br>';
 		    markerContentHTML += '<a href="#" onclick="lodgingSearch('+lat+','+lon+')">Get Lodging</a><br>';
 		    markerContentHTML += '<a href="#" onclick="grocerySearch('+lat+','+lon+')">Find Food</a>';
@@ -115,7 +115,43 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		createMarker(cities[i],i);
 	}
 
-	
+	function cardinalDirection(deg){
+			var direction;
+			if((deg<11.25)||(deg>348.75)){
+				direction = 'N';
+			}else if(deg<33.75){
+				direction = 'NNE';
+			}else if(deg<56.25){
+				direction = 'NE';
+			}else if(deg<78.75){
+				direction = 'ENE';
+			}else if(deg<101.25){
+				direction = 'E';
+			}else if(deg<123.75){
+				direction = 'ESE';
+			}else if(deg<146.25){
+				direction = 'SE';
+			}else if(deg<168.75){
+				direction = 'SSE';
+			}else if(deg<191.25){
+				direction = 'S';
+			}else if(deg<213.75){
+				direction = 'SSW';
+			}else if(deg<236.25){
+				direction = 'SW';
+			}else if(deg<258.75){
+				direction = 'WSW';
+			}else if(deg<281.25){
+				direction = 'W';
+			}else if(deg<303.75){
+				direction = 'WNW';
+			}else if(deg<326.25){
+				direction = 'NW';
+			}else if(deg<348.75){
+				direction = 'NNW';
+			}
+			return direction;
+		}
 
 	// Function to display local lodging options.  Passing lat and lon for starting location
 	lodgingSearch = function(lat1, lon1){
@@ -186,7 +222,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 
 
 // Function to return local grocery stores. Passing lat and lon
-grocerySearch = function(lat1, lon1){
+	grocerySearch = function(lat1, lon1){
 		var map;
 		var infowindow;
 		var pyrmont = {lat: lat1, lng: lon1};
