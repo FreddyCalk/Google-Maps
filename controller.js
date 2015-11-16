@@ -52,9 +52,9 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		    markerContentHTML += '<div class="pop-change"><span class="bold">Population Change %:</span> ' + city.change + '</div>';
 		    markerContentHTML += '<div class="pop-dens"><span class="bold">Population Density:</span> ' + city.lastPopDensityMiles + '</div>';
 		    markerContentHTML += '<div class="land-area"><span class="bold">Land Area:</span> ' + city.landAreaSqMiles + '</div>';
-		    markerContentHTML += '<div><span class="bold">Temperature:</span> '+weatherData.main.temp+'&#176F</div>';
-		    markerContentHTML += '<img class="floated" src="http://openweathermap.org/img/w/'+weatherData.weather[0].icon+'.png"><br>';
-		    markerContentHTML += '<div><span class="bold">Winds:</span> '+cardinalDirection(weatherData.wind.deg)+ ' at '+ weatherData.wind.speed+ ' mph</div><br>';
+		    markerContentHTML += '<div><span class="bold">Temperature:</span> '+Math.round(weatherData.main.temp)+'&#176F</div>';
+		    markerContentHTML += '<img class="floated" src="http://openweathermap.org/img/w/'+weatherData.weather[0].icon+'.png">';
+		    markerContentHTML += '<div><span class="bold">Winds:</span> '+cardinalDirection(weatherData.wind.deg)+ ' at '+ Math.round(weatherData.wind.speed)+ ' mph</div><br>';
 		    markerContentHTML += '<a href="#" onclick="getDirections('+lat+','+lon+')">Get directions</a><br>';
 		    markerContentHTML += '<a href="#" onclick="lodgingSearch('+lat+','+lon+')">Get Lodging</a><br>';
 		    markerContentHTML += '<a href="#" onclick="grocerySearch('+lat+','+lon+')">Find Food</a>';
