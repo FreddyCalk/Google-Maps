@@ -43,8 +43,7 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		var weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q="+city.city+",us,ga&units=imperial&APPID="+weatherAPI;
 		
 		$.getJSON(weatherUrl, function(weatherData){
-        	console.log(weatherData)
-		// defining the HTML content of the infor boxes that appear when you click on a marker.
+		// defining the HTML content of the info boxes that appear when you click on a marker.
 		var markerContentHTML = '<div class="infoWindowContent">';
 			markerContentHTML += '<div class="state"><span class="bold">State:</span> ' + city.state + '</div>';
 		    markerContentHTML += '<div class="total-pop"><span class="bold">Total Population:</span> ' + city.yearEstimate + '</div>';
@@ -207,10 +206,8 @@ angular.module('myApp',[]).controller('mapController',function($scope){
 		        position: place.geometry.location,
 		        icon: "media/lodging.png"
 		      });
-		      console.log(place)
 		      	var html = "<div id='info-window'>"+place.name+"<br>"+place.formatted_address+"<br>"
 		      		html += place.formatted_phone_number+"</div>"
-	      		console.log(html)
 		        infowindow.setContent(html);
 		      
 			}
